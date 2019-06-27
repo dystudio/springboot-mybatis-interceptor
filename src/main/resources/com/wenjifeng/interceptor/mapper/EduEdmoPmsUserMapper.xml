@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wenjifeng.interceptor.springbootibatisinterceptor.mapper.EduEdmoPmsUserMapper">
+
+    <insert id="insert" parameterType="com.wenjifeng.interceptor.springbootibatisinterceptor.demo.EduEdmoPmsUser">
+        INSERT INTO edu_edmo_pms_user (id,version,create_time,user_no,user_type,main_user_id,user_pwd,user_name,mobile_no,email,status,
+                        last_login_time,is_changed_pwd,pwd_error_count,pwd_error_time,remark)
+        VALUES (#{id},#{version},#{createDate},#{userNo},#{userType},#{mainUserId},#{userPwd},#{userName},#{mobileNo},#{email},
+                #{status},#{lastLoginTime},#{isChangedPwd},#{pwdErrorCount},#{pwdErrorTime},#{remark})
+    </insert>
+
+    <select id="queryById" parameterType="java.lang.String" resultType="com.wenjifeng.interceptor.springbootibatisinterceptor.demo.EduEdmoPmsUser">
+        SELECT id as id,
+                version as version,
+                create_time as createTime,
+                user_no as userNo,
+                user_type as userType,
+                main_user_id as mainUserId,
+                user_pwd as userPwd,
+                user_name as userName,
+                mobile_no as mobileNo,
+                email as email,
+                status as status,
+                last_login_time as lastLoginTime,
+                is_changed_pwd as isChangedPwd,
+                pwd_error_count as pwdErrorCount,
+                pwd_error_time as pwdErrorTime,
+                remark as remark
+        FROM edu_edmo_pms_user
+        where id = #{id}
+    </select>
+
+    <select id="queryByMainUserId" parameterType="java.lang.String" resultType="com.wenjifeng.interceptor.springbootibatisinterceptor.demo.EduEdmoPmsUser">
+        SELECT pms.id as id,
+        pms.version as version,
+        pms.create_time as createTime,
+        pms.user_no as userNo,
+        pms.user_type as userType,
+        pms.main_user_id as mainUserId,
+        pms.user_pwd as userPwd,
+        pms.user_name as userName,
+        pms.mobile_no as mobileNo,
+        pms.email as email,
+        pms.status as status,
+        pms.last_login_time as lastLoginTime,
+        pms.is_changed_pwd as isChangedPwd,
+        pms.pwd_error_count as pwdErrorCount,
+        pms.pwd_error_time as pwdErrorTime,
+        pms.remark as remark,
+        info.name as name
+        FROM edu_edmo_pms_user pms,user_info info
+        where pms.main_user_id = #{mainUserId}
+              and pms.id = info.uid
+    </select>
+
+    <select id = "queryUserStatus" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select status
+        FROM edu_edmo_pms_user
+        WHERE id = #{id}
+    </select>
+</mapper>
